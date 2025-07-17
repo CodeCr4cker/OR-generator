@@ -1,0 +1,202 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(120deg, #8fd3f4 0%, #84fab0 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 480px;
+    margin: 60px auto 0 auto;
+    background: rgba(255,255,255,0.9);
+    border-radius: 25px;
+    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.2);
+    padding: 40px 30px 24px 30px;
+    position: relative;
+    animation: fadeInUp 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(40px);}
+    100% { opacity: 1; transform: translateY(0);}
+}
+
+.animated-title {
+    font-size: 2.2rem;
+    background: linear-gradient(90deg, #38ef7d 30%, #11998e 70%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    margin-bottom: 28px;
+    animation: gradientMove 3.5s infinite alternate;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+@keyframes gradientMove {
+    0% {background-position: left;}
+    100% {background-position: right;}
+}
+
+#qrForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
+#textInput {
+    width: 100%;
+    min-height: 90px;
+    font-size: 1.1rem;
+    border: none;
+    outline: none;
+    background: rgba(132, 250, 176, 0.17);
+    border-radius: 10px;
+    padding: 14px;
+    resize: vertical;
+    box-shadow: 0 1px 8px rgba(56,239,125,0.07);
+    transition: box-shadow 0.2s;
+}
+
+#textInput:focus {
+    box-shadow: 0 0 0 3px #38ef7d33;
+}
+
+#generateBtn {
+    background: linear-gradient(90deg, #43cea2 0%, #185a9d 100%);
+    color: white;
+    border: none;
+    font-size: 1.09rem;
+    padding: 12px 36px;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(67,206,162,0.14);
+    transition: background 0.3s, box-shadow 0.2s, transform 0.1s;
+    font-weight: 600;
+    position: relative;
+    overflow: hidden;
+}
+
+#generateBtn span {
+    position: relative;
+    z-index: 1;
+}
+
+#generateBtn::before {
+    content: "";
+    position: absolute;
+    left: -40%;
+    top: 0;
+    width: 180%;
+    height: 100%;
+    background: linear-gradient(120deg, #43cea2 0%, #185a9d 100%);
+    opacity: 0.4;
+    transform: skewX(-25deg);
+    transition: left 0.4s;
+    z-index: 0;
+}
+
+#generateBtn:hover::before {
+    left: 0;
+}
+
+#generateBtn:hover {
+    background: linear-gradient(90deg, #185a9d 0%, #43cea2 100%);
+    box-shadow: 0 4px 24px rgba(67,206,162,0.28);
+    transform: translateY(-2px) scale(1.03);
+}
+
+#outputArea {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 28px 0 10px 0;
+    min-height: 200px;
+    animation: popFade 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes popFade {
+    from { opacity: 0; transform: scale(0.8);}
+    to { opacity: 1; transform: scale(1);}
+}
+
+#qrCode {
+    box-shadow: 0 4px 20px rgba(24,90,157,0.10);
+    border-radius: 16px;
+    background: white;
+    padding: 12px;
+    transition: box-shadow 0.2s, transform 0.1s;
+    animation: qrBounce 0.8s;
+}
+
+@keyframes qrBounce {
+    0% { transform: scale(0.7); opacity:0;}
+    60% { transform: scale(1.08);}
+    80% { transform: scale(0.95);}
+    100% { transform: scale(1); opacity:1;}
+}
+
+.download-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0;
+}
+
+#downloadBtn {
+    background: linear-gradient(90deg, #1e3c72 0%, #2a5298 100%);
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    font-size: 0.99rem;
+    padding: 8px 30px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 12px rgba(46,82,152,0.11);
+    margin-top: 6px;
+}
+
+#downloadBtn:hover {
+    background: linear-gradient(90deg, #2a5298 0%, #1e3c72 100%);
+    box-shadow: 0 4px 24px rgba(46,82,152,0.19);
+}
+
+footer {
+    width: 100%;
+    text-align: center;
+    color: #444;
+    margin-top: 34px;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    padding-bottom: 18px;
+}
+
+.heart {
+    color: #e25555;
+    animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1);}
+    50% { transform: scale(1.18);}
+    100% { transform: scale(1);}
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .container {
+        padding: 18px 8px 20px 8px;
+        max-width: 97vw;
+        margin-top: 10vw;
+    }
+    .animated-title {
+        font-size: 1.4rem;
+    }
+    #outputArea {
+        min-height: 130px;
+    }
+}
