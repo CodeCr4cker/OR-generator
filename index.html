@@ -1,190 +1,283 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Netflix Intro Animation Pure CSS</title>
-  <link rel="stylesheet" href="./style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashlight Redirect Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        .main-content {
+            text-align: center;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        h1 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .buttons-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .redirect-button {
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            border: none;
+            border-radius: 15px;
+            padding: 1.5rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .redirect-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+        }
+
+        .redirect-button:active {
+            transform: translateY(-1px);
+        }
+
+        .redirect-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .redirect-button:hover::before {
+            left: 100%;
+        }
+
+        /* Flashlight Effect */
+        .flashlight-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: white;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.1s ease;
+        }
+
+        .flashlight-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* GIF Container */
+        .gif-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .gif-container.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .gif-image {
+            max-width: 400px;
+            max-height: 400px;
+            width: 80%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 0 50px rgba(255,255,255,0.3);
+        }
+
+        /* Hidden state for main content */
+        .main-content.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .buttons-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .redirect-button {
+                padding: 1.2rem 1.5rem;
+                font-size: 1rem;
+            }
+            
+            .gif-image {
+                max-width: 300px;
+                max-height: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .gif-image {
+                max-width: 250px;
+                max-height: 250px;
+            }
+        }
+    </style>
 </head>
 <body>
+    <div class="main-content" id="mainContent">
+        <h1>Welcome to the Portal</h1>
+        <p class="subtitle">Click any button below to experience the flashlight effect and get redirected</p>
+        
+        <div class="buttons-container">
+            <button class="redirect-button" onclick="handleRedirect('https://www.google.com')">
+                🔍 Search Engine
+            </button>
+            <button class="redirect-button" onclick="handleRedirect('https://www.github.com')">
+                💻 Code Repository
+            </button>
+            <button class="redirect-button" onclick="handleRedirect('https://www.youtube.com')">
+                🎥 Video Platform
+            </button>
+            <button class="redirect-button" onclick="handleRedirect('https://www.wikipedia.org')">
+                📚 Encyclopedia
+            </button>
+            <button class="redirect-button" onclick="handleRedirect('https://www.stackoverflow.com')">
+                🤝 Developer Community
+            </button>
+            <button class="redirect-button" onclick="handleRedirect('https://www.reddit.com')">
+                🌐 Social Platform
+            </button>
+        </div>
+    </div>
 
-<div id="container">
-<!-- Edit the letter attr to: N, E, T, F, L, I or X -->
-   <netflixintro letter="N">
-    <div class="helper-1">
-      <div class="effect-brush">
-        <span class="fur-31"></span>
-        <span class="fur-30"></span>
-        <span class="fur-29"></span>
-        <span class="fur-28"></span>
-        <span class="fur-27"></span>
-        <span class="fur-26"></span>
-        <span class="fur-25"></span>
-        <span class="fur-24"></span>
-        <span class="fur-23"></span>
-        <span class="fur-22"></span>
-        <span class="fur-21"></span>
-        <span class="fur-20"></span>
-        <span class="fur-19"></span>
-        <span class="fur-18"></span>
-        <span class="fur-17"></span>
-        <span class="fur-16"></span>
-        <span class="fur-15"></span>
-        <span class="fur-14"></span>
-        <span class="fur-13"></span>
-        <span class="fur-12"></span>
-        <span class="fur-11"></span>
-        <span class="fur-10"></span>
-        <span class="fur-9"></span>
-        <span class="fur-8"></span>
-        <span class="fur-7"></span>
-        <span class="fur-6"></span>
-        <span class="fur-5"></span>
-        <span class="fur-4"></span>
-        <span class="fur-3"></span>
-        <span class="fur-2"></span>
-        <span class="fur-1"></span>
-      </div>
-      <div class="effect-lumieres">
-        <span class="lamp-1"></span>
-        <span class="lamp-2"></span>
-        <span class="lamp-3"></span>
-        <span class="lamp-4"></span>
-        <span class="lamp-5"></span>
-        <span class="lamp-6"></span>
-        <span class="lamp-7"></span>
-        <span class="lamp-8"></span>
-        <span class="lamp-9"></span>
-        <span class="lamp-10"></span>
-        <span class="lamp-11"></span>
-        <span class="lamp-12"></span>
-        <span class="lamp-13"></span>
-        <span class="lamp-14"></span>
-        <span class="lamp-15"></span>
-        <span class="lamp-16"></span>
-        <span class="lamp-17"></span>
-        <span class="lamp-18"></span>
-        <span class="lamp-19"></span>
-        <span class="lamp-20"></span>
-        <span class="lamp-21"></span>
-        <span class="lamp-22"></span>
-        <span class="lamp-23"></span>
-        <span class="lamp-24"></span>
-        <span class="lamp-25"></span>
-        <span class="lamp-26"></span>
-        <span class="lamp-27"></span>
-        <span class="lamp-28"></span>
-      </div>
-    </div>
-    <div class="helper-2">
-      <div class="effect-brush">
-        <span class="fur-31"></span>
-        <span class="fur-30"></span>
-        <span class="fur-29"></span>
-        <span class="fur-28"></span>
-        <span class="fur-27"></span>
-        <span class="fur-26"></span>
-        <span class="fur-25"></span>
-        <span class="fur-24"></span>
-        <span class="fur-23"></span>
-        <span class="fur-22"></span>
-        <span class="fur-21"></span>
-        <span class="fur-20"></span>
-        <span class="fur-19"></span>
-        <span class="fur-18"></span>
-        <span class="fur-17"></span>
-        <span class="fur-16"></span>
-        <span class="fur-15"></span>
-        <span class="fur-14"></span>
-        <span class="fur-13"></span>
-        <span class="fur-12"></span>
-        <span class="fur-11"></span>
-        <span class="fur-10"></span>
-        <span class="fur-9"></span>
-        <span class="fur-8"></span>
-        <span class="fur-7"></span>
-        <span class="fur-6"></span>
-        <span class="fur-5"></span>
-        <span class="fur-4"></span>
-        <span class="fur-3"></span>
-        <span class="fur-2"></span>
-        <span class="fur-1"></span>
-      </div>
-    </div>
-    <div class="helper-3">
-      <div class="effect-brush">
-        <span class="fur-31"></span>
-        <span class="fur-30"></span>
-        <span class="fur-29"></span>
-        <span class="fur-28"></span>
-        <span class="fur-27"></span>
-        <span class="fur-26"></span>
-        <span class="fur-25"></span>
-        <span class="fur-24"></span>
-        <span class="fur-23"></span>
-        <span class="fur-22"></span>
-        <span class="fur-21"></span>
-        <span class="fur-20"></span>
-        <span class="fur-19"></span>
-        <span class="fur-18"></span>
-        <span class="fur-17"></span>
-        <span class="fur-16"></span>
-        <span class="fur-15"></span>
-        <span class="fur-14"></span>
-        <span class="fur-13"></span>
-        <span class="fur-12"></span>
-        <span class="fur-11"></span>
-        <span class="fur-10"></span>
-        <span class="fur-9"></span>
-        <span class="fur-8"></span>
-        <span class="fur-7"></span>
-        <span class="fur-6"></span>
-        <span class="fur-5"></span>
-        <span class="fur-4"></span>
-        <span class="fur-3"></span>
-        <span class="fur-2"></span>
-        <span class="fur-1"></span>
-      </div>
-    </div>
-    <div class="helper-4">
-      <div class="effect-brush">
-        <span class="fur-31"></span>
-        <span class="fur-30"></span>
-        <span class="fur-29"></span>
-        <span class="fur-28"></span>
-        <span class="fur-27"></span>
-        <span class="fur-26"></span>
-        <span class="fur-25"></span>
-        <span class="fur-24"></span>
-        <span class="fur-23"></span>
-        <span class="fur-22"></span>
-        <span class="fur-21"></span>
-        <span class="fur-20"></span>
-        <span class="fur-19"></span>
-        <span class="fur-18"></span>
-        <span class="fur-17"></span>
-        <span class="fur-16"></span>
-        <span class="fur-15"></span>
-        <span class="fur-14"></span>
-        <span class="fur-13"></span>
-        <span class="fur-12"></span>
-        <span class="fur-11"></span>
-        <span class="fur-10"></span>
-        <span class="fur-9"></span>
-        <span class="fur-8"></span>
-        <span class="fur-7"></span>
-        <span class="fur-6"></span>
-        <span class="fur-5"></span>
-        <span class="fur-4"></span>
-        <span class="fur-3"></span>
-        <span class="fur-2"></span>
-        <span class="fur-1"></span>
-      </div>
-    </div>
-  </netflixintro>
-</div>
+    <!-- Flashlight Effect Overlay -->
+    <div class="flashlight-overlay" id="flashlightOverlay"></div>
 
-  <script  src="./script.js"></script>
+    <!-- GIF Container -->
+    <div class="gif-container" id="gifContainer">
+        <img class="gif-image" id="gifImage" src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" alt="Loading Animation">
+    </div>
 
+    <script>
+        function handleRedirect(url) {
+            const mainContent = document.getElementById('mainContent');
+            const flashlightOverlay = document.getElementById('flashlightOverlay');
+            const gifContainer = document.getElementById('gifContainer');
+            const gifImage = document.getElementById('gifImage');
+            
+            // Hide main content
+            mainContent.classList.add('hidden');
+            
+            // Step 1: Show flashlight effect for 1 second
+            flashlightOverlay.classList.add('active');
+            
+            setTimeout(() => {
+                // Step 2: Hide flashlight and show GIF for 3 seconds
+                flashlightOverlay.classList.remove('active');
+                
+                // Restart GIF by re-setting the src
+                const gifSrc = gifImage.src;
+                gifImage.src = '';
+                gifImage.src = gifSrc;
+                
+                gifContainer.classList.add('active');
+                
+                setTimeout(() => {
+                    // Step 3: Hide GIF and show flashlight again for 1 second
+                    gifContainer.classList.remove('active');
+                    flashlightOverlay.classList.add('active');
+                    
+                    setTimeout(() => {
+                        // Step 4: Hide flashlight and redirect
+                        flashlightOverlay.classList.remove('active');
+                        window.location.href = url;
+                    }, 1000);
+                }, 3000);
+            }, 1000);
+        }
+
+        // Preload GIF for better performance
+        const gifImage = document.getElementById('gifImage');
+        const preloadGif = new Image();
+        preloadGif.src = gifImage.src;
+        
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.redirect-button');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        });
+    </script>
 </body>
 </html>
